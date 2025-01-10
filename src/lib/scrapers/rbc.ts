@@ -78,14 +78,12 @@ export async function scrapeRBCNews(): Promise<(Article & {
           aiRelevanceScore: result.confidence || 0,
           aiRelevanceReason: result.reason || ''
         };
-      } catch (error) {
-        console.error('Error analyzing article:', error);
-        // Fallback to simple keyword matching
-        const isAIRelated = isAIKeywordMatch(article);
+      } catch {
+        console.error('Error analyzing article');
         return {
           ...article,
-          aiRelevanceScore: isAIRelated ? 0.8 : 0,
-          aiRelevanceReason: isAIRelated ? 'Based on keyword matching' : 'Not AI-related'
+          aiRelevanceScore: 0,
+          aiRelevanceReason: 'Analysis failed'
         };
       }
     }));
@@ -170,8 +168,8 @@ export async function scrapeRBCCapitalMarketsTech(): Promise<Article[]> {
           aiRelevanceScore: aiAnalysis.isAIRelated ? aiAnalysis.confidence : 0,
           aiRelevanceReason: aiAnalysis.reason
         };
-      } catch (error) {
-        console.error('Error analyzing article:', error);
+      } catch {
+        console.error('Error analyzing article');
         const isAIRelated = isAIKeywordMatch(article);
         return {
           ...article,
@@ -250,8 +248,8 @@ export async function scrapeRBCThoughtLeadership(): Promise<Article[]> {
           aiRelevanceScore: aiAnalysis.isAIRelated ? aiAnalysis.confidence : 0,
           aiRelevanceReason: aiAnalysis.reason
         };
-      } catch (error) {
-        console.error('Error analyzing article:', error);
+      } catch {
+        console.error('Error analyzing article');
         const isAIRelated = isAIKeywordMatch(article);
         return {
           ...article,

@@ -2,11 +2,11 @@ import { NextResponse } from 'next/server';
 import { scrapeAllBanks } from '@/lib/scrapers';
 import { db } from '@/db/config';
 import { articles } from '@/db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 
 async function getExistingUrls(): Promise<Set<string>> {
-  const result = await pool.query('SELECT link FROM articles');
-  return new Set(result.rows.map(row => row.link));
+  const result = await db.select({ link: articles.link }).from(articles);
+  return new Set(result.map(row => row.link));
 }
 
 export async function POST() {
@@ -25,60 +25,29 @@ export async function POST() {
       await sendProgress('Getting existing articles...');
       const existingUrls = await getExistingUrls();
 
-      // Fetch new articles from all banks
-      await sendProgress('Scraping RBC news...');
-      const rbcArticles = await scrapeRBCNews();
-      
-      await sendProgress('Scraping TD news...');
-      const tdArticles = await scrapeTDNews();
-      
-      await sendProgress('Scraping BMO news...');
-      const bmoArticles = await scrapeBMONews();
-      
-      await sendProgress('Scraping Scotiabank news...');
-      const scotiaArticles = await scrapeScotiaNews();
-      
-      await sendProgress('Scraping CIBC news...');
-      const cibcArticles = await scrapeCIBCNews();
-
-      await sendProgress('Fetching SEC filings...');
-      const secFilings = await scrapeSECFilings();
-
-      const allArticles = [
-        ...rbcArticles, 
-        ...tdArticles, 
-        ...bmoArticles, 
-        ...scotiaArticles, 
-        ...cibcArticles,
-        ...secFilings
-      ];
+      await sendProgress('Scraping all banks...');
+      const allArticles = await scrapeAllBanks();
       const newArticles = allArticles.filter(article => !existingUrls.has(article.link));
 
       if (newArticles.length === 0) {
-        await sendProgress('No new articles or filings found');
+        await sendProgress('No new articles found');
         await writer.close();
         return;
       }
 
-      await sendProgress('Saving new articles and filings...');
-      // Save new articles
+      await sendProgress('Saving new articles...');
+      // Save new articles using Drizzle
       for (const article of newArticles) {
-        await pool.query(
-          `INSERT INTO articles (
-            title, link, publish_date, source, bank_code, summary,
-            ai_relevance_score, ai_relevance_reason
-          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
-          [
-            article.title,
-            article.link,
-            article.publishDate,
-            article.source,
-            article.bankCode,
-            article.summary,
-            article.aiRelevanceScore || 0,
-            article.aiRelevanceReason || ''
-          ]
-        );
+        await db.insert(articles).values({
+          title: article.title,
+          link: article.link,
+          publishDate: new Date(article.publishDate),
+          source: article.source,
+          bankCode: article.bankCode,
+          summary: article.summary,
+          aiRelevanceScore: article.aiRelevanceScore || 0,
+          aiRelevanceReason: article.aiRelevanceReason || ''
+        });
       }
 
       const newSECFilings = newArticles.filter(a => a.source === 'SEC EDGAR').length;

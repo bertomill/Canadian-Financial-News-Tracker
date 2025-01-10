@@ -1,21 +1,26 @@
-import { scrapeRBCNews } from './rbc';
-import { scrapeTDNews } from './td';
-import { scrapeBMONews } from './bmo';
-import { scrapeScotiaNews } from './scotia';
-import { scrapeCIBCNews } from './cibc';
+import { scrapeRBC } from './rbc';
+import { scrapeTD } from './td';
+import { scrapeBMO } from './bmo';
+import { scrapeScotia } from './scotia';
+import { scrapeCIBC } from './cibc';
+import { scrapeSECFilings } from './sec';
 
 export async function scrapeAllBanks() {
-  const articles = [];
-  
-  // Scrape all banks in parallel
-  const [rbcArticles, tdArticles, bmoArticles, scotiaArticles, cibcArticles] = 
-    await Promise.all([
-      scrapeRBCNews(),
-      scrapeTDNews(),
-      scrapeBMONews(),
-      scrapeScotiaNews(),
-      scrapeCIBCNews()
-    ]);
-    
-  return [...rbcArticles, ...tdArticles, ...bmoArticles, ...scotiaArticles, ...cibcArticles];
+  const [rbcArticles, tdArticles, bmoArticles, scotiaArticles, cibcArticles, secFilings] = await Promise.all([
+    scrapeRBC(),
+    scrapeTD(),
+    scrapeBMO(),
+    scrapeScotia(),
+    scrapeCIBC(),
+    scrapeSECFilings()
+  ]);
+
+  return [
+    ...rbcArticles,
+    ...tdArticles,
+    ...bmoArticles,
+    ...scotiaArticles,
+    ...cibcArticles,
+    ...secFilings
+  ];
 } 

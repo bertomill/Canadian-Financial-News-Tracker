@@ -1,22 +1,16 @@
-import { config } from 'dotenv';
-import { join } from 'path';
+import { createEnv } from "@t3-oss/env-nextjs";
+import { z } from "zod";
 
-// Load environment variables from .env.local
-config({ path: join(process.cwd(), '.env.local') });
-
-export function getEnvVar(key: string): string {
-  const value = process.env[key]?.trim();
-  
-  if (!value) {
-    if (process.env.NODE_ENV === 'development') {
-      console.warn(`Warning: Missing environment variable: ${key}`);
-      return 'dummy-value-for-development';
-    }
-    throw new Error(`Missing environment variable: ${key}`);
-  }
-  return value;
-}
-
-export const env = {
-  OPENAI_API_KEY: getEnvVar('OPENAI_API_KEY'),
-} as const; 
+export const env = createEnv({
+  server: {
+    DATABASE_URL: z.string().url(),
+    OPENAI_API_KEY: z.string().min(1),
+  },
+  client: {
+    // Add client-side variables here
+  },
+  runtimeEnv: {
+    DATABASE_URL: process.env.DATABASE_URL,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+  },
+}); 
