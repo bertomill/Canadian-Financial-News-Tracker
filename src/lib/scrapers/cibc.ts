@@ -14,7 +14,7 @@ function parseCIBCDate(dateStr: string): string {
       throw new Error('Invalid date');
     }
     return date.toISOString();
-  } catch (error) {
+  } catch {
     console.error('Error parsing date:', dateStr);
     return new Date().toISOString(); // Fallback to current date
   }

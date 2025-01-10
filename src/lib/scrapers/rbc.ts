@@ -121,7 +121,7 @@ export async function scrapeRBCCapitalMarketsTech(): Promise<Article[]> {
     
     try {
       await page.waitForSelector('.tile--campaign-story, .tile--article', { timeout: 10000 });
-    } catch (error) {
+    } catch {
       console.log('Could not find articles, trying alternative selector...');
       await page.waitForSelector('article, .article', { timeout: 10000 });
     }
@@ -206,7 +206,7 @@ export async function scrapeRBCThoughtLeadership(): Promise<Article[]> {
     
     try {
       await page.waitForSelector('.post', { timeout: 10000 });
-    } catch (error) {
+    } catch {
       console.log('Could not find articles, trying alternative selector...');
       await page.waitForSelector('.callout', { timeout: 10000 });
     }

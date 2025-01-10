@@ -1,4 +1,4 @@
-import { pgTable, serial, text, timestamp, uniqueIndex, real } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, timestamp, real } from 'drizzle-orm/pg-core';
 
 // Define the articles table
 export const articles = pgTable('articles', {

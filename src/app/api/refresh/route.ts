@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { scrapeAllBanks } from '@/lib/scrapers';
 import { db } from '@/db/config';
 import { articles, InsertArticle } from '@/db/schema';
-import { eq, sql } from 'drizzle-orm';
 
 async function getExistingUrls(): Promise<Set<string>> {
   const result = await db.select({ link: articles.link }).from(articles);
