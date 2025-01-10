@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { scrapeAllBanks } from '@/lib/scrapers';
 import { db } from '@/db/config';
-import { articles } from '@/db/schema';
+import { articles, InsertArticle } from '@/db/schema';
 import { eq, sql } from 'drizzle-orm';
 
 async function getExistingUrls(): Promise<Set<string>> {
@@ -38,16 +38,17 @@ export async function POST() {
       await sendProgress('Saving new articles...');
       // Save new articles using Drizzle
       for (const article of newArticles) {
-        await db.insert(articles).values({
+        const insertData: InsertArticle = {
           title: article.title,
           link: article.link,
           publishDate: new Date(article.publishDate),
           source: article.source,
           bankCode: article.bankCode,
-          summary: article.summary,
+          summary: article.summary || '',
           aiRelevanceScore: article.aiRelevanceScore || 0,
           aiRelevanceReason: article.aiRelevanceReason || ''
-        });
+        };
+        await db.insert(articles).values(insertData);
       }
 
       const newSECFilings = newArticles.filter(a => a.source === 'SEC EDGAR').length;

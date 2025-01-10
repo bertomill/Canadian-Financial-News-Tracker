@@ -1,5 +1,6 @@
 import { pgTable, serial, text, timestamp, uniqueIndex, real } from 'drizzle-orm/pg-core';
 
+// Define the articles table
 export const articles = pgTable('articles', {
   id: serial('id').primaryKey(),
   title: text('title').notNull(),
@@ -11,4 +12,8 @@ export const articles = pgTable('articles', {
   aiRelevanceScore: real('ai_relevance_score').default(0),
   aiRelevanceReason: text('ai_relevance_reason'),
   createdAt: timestamp('created_at').defaultNow()
-}); 
+});
+
+// Export type for TypeScript
+export type Article = typeof articles.$inferSelect;
+export type InsertArticle = typeof articles.$inferInsert; 
