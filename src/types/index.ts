@@ -12,4 +12,11 @@ export interface Article {
   source: string;
   bankCode: string;
   summary: string;
+  aiRelevanceScore?: number;
+  aiRelevanceReason?: string;
+  metadata?: {
+    readTime?: string;
+    categories?: string[];
+    [key: string]: string | string[] | undefined;
+  };
 } 

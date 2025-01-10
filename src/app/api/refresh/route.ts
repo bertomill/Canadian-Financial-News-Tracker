@@ -50,12 +50,8 @@ export async function POST() {
         await db.insert(articles).values(insertData);
       }
 
-      const newSECFilings = newArticles.filter(a => a.source === 'SEC EDGAR').length;
-      const newPressReleases = newArticles.length - newSECFilings;
-
       await sendProgress(
-        `✨ Added ${newArticles.length} new items ` +
-        `(${newPressReleases} press releases, ${newSECFilings} SEC filings)`
+        `✨ Added ${newArticles.length} new articles`
       );
       await writer.close();
     } catch (error) {

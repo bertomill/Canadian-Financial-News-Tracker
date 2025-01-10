@@ -109,7 +109,7 @@ export async function scrapeRBCCapitalMarketsTech(): Promise<Article[]> {
     
     const browser = await puppeteer.launch({
       timeout: 30000,
-      headless: 'new'
+      headless: true
     });
     const page = await browser.newPage();
     
@@ -194,7 +194,7 @@ export async function scrapeRBCThoughtLeadership(): Promise<Article[]> {
     
     const browser = await puppeteer.launch({
       timeout: 30000,
-      headless: 'new'
+      headless: true
     });
     const page = await browser.newPage();
     

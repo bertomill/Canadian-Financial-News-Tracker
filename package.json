@@ -7,9 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:generate": "drizzle-kit generate:pg",
-    "db:push": "drizzle-kit push:pg",
-    "db:studio": "drizzle-kit studio"
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:migrate": "tsx src/scripts/migrate.ts"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -19,6 +20,7 @@
     "date-fns": "^4.1.0",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.3",
+    "ml-distance": "^4.0.1",
     "next": "15.1.4",
     "openai": "^4.78.0",
     "pg": "^8.13.1",

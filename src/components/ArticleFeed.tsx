@@ -9,9 +9,14 @@ interface ArticleWithScore extends Article {
   aiRelevanceReason?: string;
 }
 
-export function ArticleFeed() {
-  const [articles, setArticles] = useState<ArticleWithScore[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+interface ArticleFeedProps {
+  articles?: ArticleWithScore[];
+  bankCode?: string;
+}
+
+export function ArticleFeed({ articles: initialArticles, bankCode }: ArticleFeedProps = {}) {
+  const [articles, setArticles] = useState<ArticleWithScore[]>(initialArticles || []);
+  const [isLoading, setIsLoading] = useState(!initialArticles);
   const [error, setError] = useState<string | null>(null);
 
   const fetchArticles = async () => {
@@ -32,8 +37,10 @@ export function ArticleFeed() {
   };
 
   useEffect(() => {
-    fetchArticles();
-  }, []);
+    if (!initialArticles) {
+      fetchArticles();
+    }
+  }, [initialArticles]);
 
   if (error) {
     return (
@@ -51,5 +58,5 @@ export function ArticleFeed() {
     );
   }
 
-  return <TabView articles={articles} onRefresh={fetchArticles} />;
+  return <TabView articles={articles} onRefresh={fetchArticles} bankCode={bankCode} />;
 } 

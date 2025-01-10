@@ -3,16 +3,14 @@ import { scrapeTD } from './td';
 import { scrapeBMO } from './bmo';
 import { scrapeScotia } from './scotia';
 import { scrapeCIBC } from './cibc';
-import { scrapeSECFilings } from './sec';
 
 export async function scrapeAllBanks() {
-  const [rbcArticles, tdArticles, bmoArticles, scotiaArticles, cibcArticles, secFilings] = await Promise.all([
+  const [rbcArticles, tdArticles, bmoArticles, scotiaArticles, cibcArticles] = await Promise.all([
     scrapeRBC(),
     scrapeTD(),
     scrapeBMO(),
     scrapeScotia(),
-    scrapeCIBC(),
-    scrapeSECFilings()
+    scrapeCIBC()
   ]);
 
   return [
@@ -20,7 +18,6 @@ export async function scrapeAllBanks() {
     ...tdArticles,
     ...bmoArticles,
     ...scotiaArticles,
-    ...cibcArticles,
-    ...secFilings
+    ...cibcArticles
   ];
 } 

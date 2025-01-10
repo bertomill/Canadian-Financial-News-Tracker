@@ -1,174 +1,64 @@
-import { pool } from '../db/config';
+import { db } from '../db/config';
+import { articles, Article } from '../db/schema';
 import { writeFileSync } from 'fs';
 import { join } from 'path';
+import { desc } from 'drizzle-orm';
 
 async function generateReport() {
   try {
-    console.log('Fetching articles from database...');
-    
-    const result = await pool.query(`
-      SELECT 
-        id,
-        title,
-        bank_code,
-        publish_date,
-        ai_relevance_score,
-        ai_relevance_reason,
-        created_at,
-        link
-      FROM articles 
-      ORDER BY publish_date DESC;
-    `);
+    console.log('Fetching articles...');
+    const allArticles = await db
+      .select()
+      .from(articles)
+      .orderBy(desc(articles.publishDate));
 
-    const stats = await pool.query(`
-      SELECT 
-        bank_code,
-        COUNT(*) as count,
-        AVG(ai_relevance_score) as avg_score,
-        COUNT(CASE WHEN ai_relevance_score > 0.5 THEN 1 END) as ai_relevant_count
-      FROM articles 
-      GROUP BY bank_code;
-    `);
+    // Group articles by bank
+    const articlesByBank = new Map<string, Article[]>();
+    allArticles.forEach((article: Article) => {
+      const bankArticles = articlesByBank.get(article.bankCode) || [];
+      bankArticles.push(article);
+      articlesByBank.set(article.bankCode, bankArticles);
+    });
 
-    // Generate HTML
-    const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <title>Bank Articles Report</title>
-      <style>
-        body {
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-          line-height: 1.6;
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 20px;
-          background: #f5f5f5;
-        }
-        h1, h2 { color: #2c3e50; }
-        .stats {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-          gap: 20px;
-          margin-bottom: 30px;
-        }
-        .stat-card {
-          background: white;
-          padding: 20px;
-          border-radius: 8px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        table {
-          width: 100%;
-          border-collapse: collapse;
-          background: white;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-          border-radius: 8px;
-          overflow: hidden;
-        }
-        th, td {
-          padding: 12px;
-          text-align: left;
-          border-bottom: 1px solid #eee;
-        }
-        th {
-          background: #2c3e50;
-          color: white;
-        }
-        tr:hover { background: #f8f9fa; }
-        .bank-badge {
-          padding: 4px 8px;
-          border-radius: 4px;
-          font-weight: 500;
-          display: inline-block;
-        }
-        .bank-RBC { background: #e3f2fd; color: #1565c0; }
-        .bank-TD { background: #e8f5e9; color: #2e7d32; }
-        .bank-BMO { background: #fff3e0; color: #ef6c00; }
-        .ai-score {
-          padding: 4px 8px;
-          border-radius: 4px;
-          background: #f3e5f5;
-          color: #7b1fa2;
-        }
-        a { color: #2196f3; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        .timestamp { color: #666; font-size: 0.9em; }
-      </style>
-    </head>
-    <body>
-      <h1>Bank Articles Report</h1>
-      
-      <div class="stats">
-        ${stats.rows.map(stat => `
-          <div class="stat-card">
-            <h3>${stat.bank_code}</h3>
-            <p>Total Articles: ${stat.count}</p>
-            <p>Average AI Score: ${(stat.avg_score * 100).toFixed(1)}%</p>
-            <p>AI Relevant Articles: ${stat.ai_relevant_count}</p>
-          </div>
-        `).join('')}
-      </div>
+    // Generate report content
+    let report = '# Canadian Bank News Report\n\n';
+    report += `Generated on ${new Date().toLocaleDateString()}\n\n`;
 
-      <h2>Articles</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Bank</th>
-            <th>Title</th>
-            <th>Published</th>
-            <th>AI Score</th>
-            <th>AI Reasoning</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${result.rows.map(article => `
-            <tr>
-              <td>
-                <span class="bank-badge bank-${article.bank_code}">
-                  ${article.bank_code}
-                </span>
-              </td>
-              <td>
-                <a href="${article.link}" target="_blank">
-                  ${article.title}
-                </a>
-              </td>
-              <td class="timestamp">
-                ${new Date(article.publish_date).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'short',
-                  day: 'numeric'
-                })}
-              </td>
-              <td>
-                <span class="ai-score">
-                  ${(article.ai_relevance_score * 100).toFixed(0)}%
-                </span>
-              </td>
-              <td>
-                ${article.ai_relevance_reason || ''}
-              </td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-      
-      <p class="timestamp">Generated on ${new Date().toLocaleString()}</p>
-    </body>
-    </html>
-    `;
+    // Overall statistics
+    report += '## Overall Statistics\n\n';
+    report += `Total Articles: ${allArticles.length}\n`;
+    articlesByBank.forEach((articles: Article[], bankCode: string) => {
+      report += `${bankCode}: ${articles.length} articles\n`;
+    });
 
-    // Write to file
-    const reportPath = join(process.cwd(), 'articles-report.html');
-    writeFileSync(reportPath, html);
-    console.log(`Report generated at: ${reportPath}`);
-    console.log('Open this file in your browser to view the report');
+    // AI-relevant articles
+    const aiRelevantArticles = allArticles.filter(a => (a.aiRelevanceScore || 0) > 0.5);
+    report += `\nAI-Relevant Articles: ${aiRelevantArticles.length}\n\n`;
+
+    // Articles by bank
+    articlesByBank.forEach((articles: Article[], bankCode: string) => {
+      report += `\n## ${bankCode}\n\n`;
+      articles.forEach((article: Article) => {
+        report += `### ${article.title}\n`;
+        report += `Date: ${new Date(article.publishDate).toLocaleDateString()}\n`;
+        report += `Source: ${article.source}\n`;
+        report += `Link: ${article.link}\n`;
+        if (article.aiRelevanceScore && article.aiRelevanceScore > 0.5) {
+          report += `AI Score: ${(article.aiRelevanceScore * 100).toFixed(0)}%\n`;
+          report += `AI Analysis: ${article.aiRelevanceReason}\n`;
+        }
+        report += `\n${article.summary}\n\n---\n\n`;
+      });
+    });
+
+    // Save report
+    const reportPath = join(process.cwd(), 'reports', `bank-news-${new Date().toISOString().split('T')[0]}.md`);
+    writeFileSync(reportPath, report);
+    console.log(`Report saved to ${reportPath}`);
 
   } catch (error) {
     console.error('Error generating report:', error);
-  } finally {
-    await pool.end();
+    process.exit(1);
   }
 }
 

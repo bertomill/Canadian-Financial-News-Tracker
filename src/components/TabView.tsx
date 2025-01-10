@@ -14,6 +14,7 @@ interface ArticleWithScore extends Article {
 interface TabViewProps {
   articles: ArticleWithScore[];
   onRefresh?: () => void;
+  bankCode?: string;
 }
 
 interface Column {
@@ -32,13 +33,15 @@ const BANKS = [
   { code: 'CIBC', name: 'CIBC' }
 ];
 
-export function TabView({ articles, onRefresh }: TabViewProps) {
+export function TabView({ articles, onRefresh, bankCode }: TabViewProps) {
   const [sortConfig, setSortConfig] = useState<{
     key: 'bankCode' | 'aiRelevanceScore' | 'publishDate';
     direction: 'asc' | 'desc';
   } | null>(null);
 
-  const [selectedBanks, setSelectedBanks] = useState<string[]>(BANKS.map(bank => bank.code));
+  const [selectedBanks, setSelectedBanks] = useState<string[]>(
+    bankCode ? [bankCode] : BANKS.map(bank => bank.code)
+  );
 
   // Define initial column order
   const [columns, setColumns] = useState<Column[]>([
