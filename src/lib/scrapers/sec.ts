@@ -69,7 +69,11 @@ interface SECResponse {
   };
   phone: string;
   flags: string;
-  formerNames: any[];
+  formerNames: Array<{
+    name: string;
+    from: string;
+    to: string;
+  }>;
   filings: {
     recent: {
       accessionNumber: string[];
@@ -87,7 +91,12 @@ interface SECResponse {
       primaryDocument: string[];
       primaryDocDescription: string[];
     };
-    files: any[];
+    files: Array<{
+      name: string;
+      filingCount: number;
+      filingFrom: string;
+      filingTo: string;
+    }>;
   };
 }
 

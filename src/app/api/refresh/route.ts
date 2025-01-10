@@ -1,12 +1,8 @@
 import { NextResponse } from 'next/server';
-import { pool } from '@/db/config';
-import { scrapeRBCNews } from '@/lib/scrapers/rbc';
-import { scrapeTDNews } from '@/lib/scrapers/td';
-import { scrapeBMONews } from '@/lib/scrapers/bmo';
-import { scrapeScotiaNews } from '@/lib/scrapers/scotia';
-import { scrapeCIBCNews } from '@/lib/scrapers/cibc';
-import { scrapeSECFilings } from '@/lib/scrapers/sec';
-import { Article } from '@/types';
+import { scrapeAllBanks } from '@/lib/scrapers';
+import { db } from '@/db/config';
+import { articles } from '@/db/schema';
+import { eq } from 'drizzle-orm';
 
 async function getExistingUrls(): Promise<Set<string>> {
   const result = await pool.query('SELECT link FROM articles');

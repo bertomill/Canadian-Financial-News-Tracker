@@ -77,11 +77,10 @@ export async function scrapeCIBCNews(): Promise<Article[]> {
     console.log(`Found ${articles.length} CIBC articles`);
     return articles;
 
-  } catch (error) {
-    console.error('Error scraping CIBC news:', error);
+  } catch {
+    console.error('Error scraping CIBC news');
+    if (browser) await browser.close();
     return [];
-  } finally {
-    await browser.close();
   }
 }
 

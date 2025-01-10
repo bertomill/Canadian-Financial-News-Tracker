@@ -96,4 +96,7 @@ if (require.main === module) {
       console.error('Test failed:', error);
       process.exit(1);
     });
-} 
+}
+
+// Export scrapeScotia as scrapeScotiaNews for backward compatibility
+export const scrapeScotiaNews = scrapeScotia; 
