@@ -1,0 +1,617 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Bank Articles Report</title>
+      <style>
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+          line-height: 1.6;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 20px;
+          background: #f5f5f5;
+        }
+        h1, h2 { color: #2c3e50; }
+        .stats {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 20px;
+          margin-bottom: 30px;
+        }
+        .stat-card {
+          background: white;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          background: white;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          border-radius: 8px;
+          overflow: hidden;
+        }
+        th, td {
+          padding: 12px;
+          text-align: left;
+          border-bottom: 1px solid #eee;
+        }
+        th {
+          background: #2c3e50;
+          color: white;
+        }
+        tr:hover { background: #f8f9fa; }
+        .bank-badge {
+          padding: 4px 8px;
+          border-radius: 4px;
+          font-weight: 500;
+          display: inline-block;
+        }
+        .bank-RBC { background: #e3f2fd; color: #1565c0; }
+        .bank-TD { background: #e8f5e9; color: #2e7d32; }
+        .bank-BMO { background: #fff3e0; color: #ef6c00; }
+        .ai-score {
+          padding: 4px 8px;
+          border-radius: 4px;
+          background: #f3e5f5;
+          color: #7b1fa2;
+        }
+        a { color: #2196f3; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .timestamp { color: #666; font-size: 0.9em; }
+      </style>
+    </head>
+    <body>
+      <h1>Bank Articles Report</h1>
+      
+      <div class="stats">
+        
+          <div class="stat-card">
+            <h3>BMO</h3>
+            <p>Total Articles: 10</p>
+            <p>Average AI Score: 16.0%</p>
+            <p>AI Relevant Articles: 0</p>
+          </div>
+        
+          <div class="stat-card">
+            <h3>TD</h3>
+            <p>Total Articles: 5</p>
+            <p>Average AI Score: 12.0%</p>
+            <p>AI Relevant Articles: 0</p>
+          </div>
+        
+          <div class="stat-card">
+            <h3>RBC</h3>
+            <p>Total Articles: 6</p>
+            <p>Average AI Score: 28.3%</p>
+            <p>AI Relevant Articles: 1</p>
+          </div>
+        
+      </div>
+
+      <h2>Articles</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Bank</th>
+            <th>Title</th>
+            <th>Published</th>
+            <th>AI Score</th>
+            <th>AI Reasoning</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-BMO">
+                  BMO
+                </span>
+              </td>
+              <td>
+                <a href="https://newsroom.bmo.com/2025-01-10-Bank-of-Montreal-Enters-into-Automatic-Securities-Purchase-Plan" target="_blank">
+                  Bank of Montreal Enters into Automatic Securities Purchase Plan
+                </a>
+              </td>
+              <td class="timestamp">
+                Jan 10, 2025
+              </td>
+              <td>
+                <span class="ai-score">
+                  20%
+                </span>
+              </td>
+              <td>
+                The news article specifically mentions an Automatic Securities Purchase Plan, which does not directly indicate AI or technology initiatives.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-BMO">
+                  BMO
+                </span>
+              </td>
+              <td>
+                <a href="https://newsroom.bmo.com/2025-01-10-BMO-and-Canal-Road-Group-Form-Strategic-Partnership-Aimed-at-Providing-Direct-Lending-to-Upper-Middle-Market-Companies" target="_blank">
+                  BMO and Canal Road Group Form Strategic Partnership Aimed at Providing Direct Lending to Upper Middle-Market Companies
+                </a>
+              </td>
+              <td class="timestamp">
+                Jan 10, 2025
+              </td>
+              <td>
+                <span class="ai-score">
+                  20%
+                </span>
+              </td>
+              <td>
+                The article does not mention AI, ML, automation, or digital transformation. It focuses on a strategic partnership for direct lending in the upper middle-market companies.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-RBC">
+                  RBC
+                </span>
+              </td>
+              <td>
+                <a href="https://www.rbc.com/newsroom/news/article.html?article=125967" target="_blank">
+                  RBC and Cohere partner to develop the next generation of highly secure generative AI solutions for financial services
+                </a>
+              </td>
+              <td class="timestamp">
+                Jan 9, 2025
+              </td>
+              <td>
+                <span class="ai-score">
+                  90%
+                </span>
+              </td>
+              <td>
+                The article explicitly mentions the partnership between RBC and Cohere to develop generative AI solutions for financial services.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-BMO">
+                  BMO
+                </span>
+              </td>
+              <td>
+                <a href="https://newsroom.bmo.com/2025-01-08-BMO-Supporting-Customers-and-Communities-Impacted-by-the-Los-Angeles-Wildfires" target="_blank">
+                  BMO Supporting Customers and Communities Impacted by the Los Angeles Wildfires
+                </a>
+              </td>
+              <td class="timestamp">
+                Jan 8, 2025
+              </td>
+              <td>
+                <span class="ai-score">
+                  0%
+                </span>
+              </td>
+              <td>
+                The article does not mention any AI or technology initiatives in banking.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-RBC">
+                  RBC
+                </span>
+              </td>
+              <td>
+                <a href="https://www.rbc.com/newsroom/news/article.html?article=125966" target="_blank">
+                  Royal Bank of Canada to host Investor Day
+                </a>
+              </td>
+              <td class="timestamp">
+                Jan 7, 2025
+              </td>
+              <td>
+                <span class="ai-score">
+                  20%
+                </span>
+              </td>
+              <td>
+                The article does not mention any AI or technology initiatives in banking, focusing instead on an upcoming Investor Day event.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-TD">
+                  TD
+                </span>
+              </td>
+              <td>
+                <a href="https://td.mediaroom.com/2025-01-03-R-E-P-E-A-T-MEDIA-ADVISORY-TD-Bank-Group-Executive-to-Present-at-the-RBC-Capital-Markets-Bank-CEO-Conference" target="_blank">
+                  /R E P E A T -- MEDIA ADVISORY - TD Bank Group Executive to Present at the RBC Capital Markets Bank CEO Conference/
+                </a>
+              </td>
+              <td class="timestamp">
+                Jan 3, 2025
+              </td>
+              <td>
+                <span class="ai-score">
+                  0%
+                </span>
+              </td>
+              <td>
+                The article does not mention any AI or technology-related terms or initiatives.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-RBC">
+                  RBC
+                </span>
+              </td>
+              <td>
+                <a href="https://www.rbc.com/newsroom/news/article.html?article=125965" target="_blank">
+                  RBC Global Asset Management Inc. announces fee reductions for certain RBC Funds and PH&N Funds
+                </a>
+              </td>
+              <td class="timestamp">
+                Jan 2, 2025
+              </td>
+              <td>
+                <span class="ai-score">
+                  20%
+                </span>
+              </td>
+              <td>
+                The article primarily focuses on fee reductions in asset management and does not mention any AI or technology initiatives in banking.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-BMO">
+                  BMO
+                </span>
+              </td>
+              <td>
+                <a href="https://newsroom.bmo.com/2024-12-30-Media-Advisory-BMO-CEO-Darryl-White-to-Speak-at-RBC-Capital-Markets-Canadian-Bank-CEO-Conference" target="_blank">
+                  Media Advisory - BMO CEO Darryl White to Speak at RBC Capital Markets Canadian Bank CEO Conference
+                </a>
+              </td>
+              <td class="timestamp">
+                Dec 30, 2024
+              </td>
+              <td>
+                <span class="ai-score">
+                  20%
+                </span>
+              </td>
+              <td>
+                The article does not mention any specific AI or technology initiatives in banking. It focuses on a CEO speaking at a conference, which does not directly indicate AI relevance.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-TD">
+                  TD
+                </span>
+              </td>
+              <td>
+                <a href="https://td.mediaroom.com/2024-12-23-TD-Bank-Group-Announces-Redemption-of-Non-Cumulative-5-Year-Rate-Reset-Class-A-First-Preferred-Shares,-Series-5-NVCC" target="_blank">
+                  TD Bank Group Announces Redemption of Non-Cumulative 5-Year Rate Reset Class A First Preferred Shares, Series 5 (NVCC)
+                </a>
+              </td>
+              <td class="timestamp">
+                Dec 23, 2024
+              </td>
+              <td>
+                <span class="ai-score">
+                  20%
+                </span>
+              </td>
+              <td>
+                The article does not mention any AI or technology initiatives in banking. It primarily focuses on a redemption announcement related to preferred shares.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-TD">
+                  TD
+                </span>
+              </td>
+              <td>
+                <a href="https://td.mediaroom.com/2024-12-20-TD-Asset-Management-Inc-Announces-Final-Annual-Reinvested-Distributions-for-TD-ETFs" target="_blank">
+                  TD Asset Management Inc. Announces Final Annual Reinvested Distributions for TD ETFs
+                </a>
+              </td>
+              <td class="timestamp">
+                Dec 20, 2024
+              </td>
+              <td>
+                <span class="ai-score">
+                  20%
+                </span>
+              </td>
+              <td>
+                The article does not mention AI, ML, automation, or digital transformation. It focuses on financial distributions for ETFs.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-TD">
+                  TD
+                </span>
+              </td>
+              <td>
+                <a href="https://td.mediaroom.com/2024-12-20-TD-Asset-Management-Inc-Announces-TD-ETF-Distributions" target="_blank">
+                  TD Asset Management Inc. Announces TD ETF Distributions
+                </a>
+              </td>
+              <td class="timestamp">
+                Dec 20, 2024
+              </td>
+              <td>
+                <span class="ai-score">
+                  0%
+                </span>
+              </td>
+              <td>
+                There is no mention or indication of AI or technology in the article.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-RBC">
+                  RBC
+                </span>
+              </td>
+              <td>
+                <a href="https://www.rbc.com/newsroom/news/article.html?article=125964" target="_blank">
+                  Dave McKay of RBC to Speak at RBC Capital Markets 2025 Canadian Bank CEO Conference
+                </a>
+              </td>
+              <td class="timestamp">
+                Dec 19, 2024
+              </td>
+              <td>
+                <span class="ai-score">
+                  20%
+                </span>
+              </td>
+              <td>
+                The article primarily focuses on a speaking engagement at a conference and does not mention AI or technology initiatives in banking.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-TD">
+                  TD
+                </span>
+              </td>
+              <td>
+                <a href="https://td.mediaroom.com/2024-12-18-MEDIA-ADVISORY-TD-Bank-Group-Executive-to-Present-at-the-RBC-Capital-Markets-Bank-CEO-Conference" target="_blank">
+                  MEDIA ADVISORY - TD Bank Group Executive to Present at the RBC Capital Markets Bank CEO Conference
+                </a>
+              </td>
+              <td class="timestamp">
+                Dec 18, 2024
+              </td>
+              <td>
+                <span class="ai-score">
+                  20%
+                </span>
+              </td>
+              <td>
+                The article does not mention AI, ML, automation, or digital transformation. It focuses on a TD Bank Group Executive presenting at a conference.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-BMO">
+                  BMO
+                </span>
+              </td>
+              <td>
+                <a href="https://newsroom.bmo.com/2024-12-18-BMO-Announces-Annual-Reinvested-Distributions-for-BMO-Exchange-Traded-Funds-and-ETF-Series-of-BMO-Mutual-Funds" target="_blank">
+                  BMO Announces Annual Reinvested Distributions for BMO Exchange Traded Funds and ETF Series of BMO Mutual Funds
+                </a>
+              </td>
+              <td class="timestamp">
+                Dec 18, 2024
+              </td>
+              <td>
+                <span class="ai-score">
+                  20%
+                </span>
+              </td>
+              <td>
+                The article primarily focuses on financial distributions for ETFs and mutual funds, with no explicit mention or clear indication of AI or technology initiatives in banking.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-BMO">
+                  BMO
+                </span>
+              </td>
+              <td>
+                <a href="https://newsroom.bmo.com/2024-12-18-BMO-Announces-Cash-Distributions-for-Certain-BMO-Exchange-Traded-Funds-and-ETF-Series-of-BMO-Mutual-Funds-for-December-2024" target="_blank">
+                  BMO Announces Cash Distributions for Certain BMO Exchange Traded Funds and ETF Series of BMO Mutual Funds for December 2024
+                </a>
+              </td>
+              <td class="timestamp">
+                Dec 18, 2024
+              </td>
+              <td>
+                <span class="ai-score">
+                  0%
+                </span>
+              </td>
+              <td>
+                The article is focused on cash distributions for certain funds, with no mention or implication of AI or technology initiatives in banking.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-BMO">
+                  BMO
+                </span>
+              </td>
+              <td>
+                <a href="https://newsroom.bmo.com/2024-12-18-BMO-Investment-Survey-Over-Half-of-First-Time-Homebuyers-Plan-to-Use-First-Home-Savings-Account-FHSA-to-Buy-a-Home" target="_blank">
+                  BMO Investment Survey: Over Half of First Time Homebuyers Plan to Use First Home Savings Account (FHSA) to Buy a Home
+                </a>
+              </td>
+              <td class="timestamp">
+                Dec 18, 2024
+              </td>
+              <td>
+                <span class="ai-score">
+                  20%
+                </span>
+              </td>
+              <td>
+                The article focuses on a survey about first-time homebuyers and their use of a specific savings account, with no explicit mention or implicit reference to AI or technology initiatives in banking.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-BMO">
+                  BMO
+                </span>
+              </td>
+              <td>
+                <a href="https://newsroom.bmo.com/2024-12-17-BMO-Survey-One-Third-of-Canadians-Expect-to-Curtail-their-Spending-in-2025" target="_blank">
+                  BMO Survey: One-Third of Canadians Expect to Curtail their Spending in 2025
+                </a>
+              </td>
+              <td class="timestamp">
+                Dec 17, 2024
+              </td>
+              <td>
+                <span class="ai-score">
+                  20%
+                </span>
+              </td>
+              <td>
+                The article does not mention any AI or technology initiatives in banking. It primarily focuses on consumer spending trends.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-RBC">
+                  RBC
+                </span>
+              </td>
+              <td>
+                <a href="https://www.rbc.com/newsroom/news/article.html?article=125963" target="_blank">
+                  CIB and RBC commit $20 million towards the environmentally sustainable revitalization of the Matawa Training and Wellness Centre
+                </a>
+              </td>
+              <td class="timestamp">
+                Dec 13, 2024
+              </td>
+              <td>
+                <span class="ai-score">
+                  0%
+                </span>
+              </td>
+              <td>
+                The article focuses on environmentally sustainable revitalization and financing of a community hub, with no explicit or implicit mention of AI or technology initiatives in banking.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-BMO">
+                  BMO
+                </span>
+              </td>
+              <td>
+                <a href="https://newsroom.bmo.com/2024-12-11-BMO-Recognized-with-Four-Major-Treasury-Payment-Solutions-Awards" target="_blank">
+                  BMO Recognized with Four Major Treasury & Payment Solutions Awards
+                </a>
+              </td>
+              <td class="timestamp">
+                Dec 12, 2024
+              </td>
+              <td>
+                <span class="ai-score">
+                  20%
+                </span>
+              </td>
+              <td>
+                The article focuses on awards in treasury and payment solutions, which are not explicitly related to AI or technology.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-RBC">
+                  RBC
+                </span>
+              </td>
+              <td>
+                <a href="https://www.rbc.com/newsroom/news/article.html?article=125961" target="_blank">
+                  Finances and feelings: Harsh economic realities taking a toll on relationships among Canadian couples - RBC poll
+                </a>
+              </td>
+              <td class="timestamp">
+                Dec 12, 2024
+              </td>
+              <td>
+                <span class="ai-score">
+                  20%
+                </span>
+              </td>
+              <td>
+                The article focuses on the impact of economic realities on relationships among Canadian couples, with no explicit or implicit mention of AI or technology initiatives in banking.
+              </td>
+            </tr>
+          
+            <tr>
+              <td>
+                <span class="bank-badge bank-BMO">
+                  BMO
+                </span>
+              </td>
+              <td>
+                <a href="https://newsroom.bmo.com/2024-12-11-BMO-Decreases-CDN-Prime-Lending-Rate-to-5-45-Per-Cent" target="_blank">
+                  BMO Decreases CDN$ Prime Lending Rate to 5.45 Per Cent
+                </a>
+              </td>
+              <td class="timestamp">
+                Dec 11, 2024
+              </td>
+              <td>
+                <span class="ai-score">
+                  20%
+                </span>
+              </td>
+              <td>
+                The article primarily focuses on a change in lending rates, with no explicit mention or implicit reference to AI or technology initiatives in banking.
+              </td>
+            </tr>
+          
+        </tbody>
+      </table>
+      
+      <p class="timestamp">Generated on 1/10/2025, 12:19:09 PM</p>
+    </body>
+    </html>
+    
